@@ -1,0 +1,148 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.zibilal.arthesis.app.DataTestActivity">
+
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Location"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Lat"
+        android:id="@+id/textLat"
+        android:layout_below="@+id/textLocation"
+        android:layout_marginTop="24dp"
+        android:padding="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Lon"
+        android:id="@+id/textLon"
+        android:layout_below="@+id/textLat"
+        android:layout_marginTop="24dp"
+        android:padding="4dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Latitude Number"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_alignBottom="@+id/textLat"
+        android:layout_toEndOf="@+id/textLat"
+        android:id="@+id/lat_number"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitude Number"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_alignBottom="@+id/textLon"
+        android:layout_toEndOf="@+id/textLon"
+        android:id="@+id/lon_number"
+        android:paddingTop="8dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate"
+        android:layout_below="@+id/lon_number"
+        android:layout_alignRight="@+id/lon_number"
+        android:layout_marginTop="10dp"
+        android:id="@+id/calculate_location"
+        android:onClick="onCalculateLocation"
+        />
+
+    <TextView
+        android:id="@+id/textProjection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Projection"
+        android:textStyle="bold"
+        android:layout_below="@+id/calculate_location"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Original"
+        android:id="@+id/textOriginalMatrix"
+        android:layout_below="@+id/textProjection"
+        android:layout_marginTop="24dp"
+        android:padding="4dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Original Number"
+        android:inputType="phone"
+        android:layout_alignBottom="@+id/textOriginalMatrix"
+        android:layout_toEndOf="@+id/textOriginalMatrix"
+        android:id="@+id/original_matrix_number"
+        android:paddingTop="8dp"/>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate"
+        android:id="@+id/calculate_projection"
+        android:onClick="onCalculateProjection"
+        android:layout_below="@+id/original_matrix_number"
+        android:layout_alignRight="@+id/original_matrix_number"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/result_location"
+        android:text="Result Location"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textLon"
+        android:layout_alignBaseline="@+id/calculate_location"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result Projection"
+        android:id="@+id/result_projection"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textOriginalMatrix"
+        android:layout_alignBaseline="@+id/calculate_projection"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Location"
+        android:onClick="onCurrentLocation"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Location"
+        android:textStyle="bold"
+        android:id="@+id/textCurrentLocation"
+        android:layout_alignParentBottom="true"
+        android:background="#999D9BB2"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"/>
+</RelativeLayout>
