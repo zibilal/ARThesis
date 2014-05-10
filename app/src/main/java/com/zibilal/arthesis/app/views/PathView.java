@@ -25,20 +25,26 @@ public class PathView extends View {
     private float mCenterX;
     private float mCenterY;
 
-    private float mX1;
-    private float mY1;
-    private float mX2;
-    private float mY2;
-    private float mX3;
-    private float mY3;
-    private float mX4;
-    private float mY4;
+    private Point p1 = new Point();
+    private Point p2 = new Point();
+    private Point p3 = new Point();
+    private Point p4 = new Point();
 
     class Point {
         float x;
         float y;
 
-
+        Point rotateZ(double angle) {
+            double rad = Math.toRadians(angle);
+            double cosa = Math.cos(rad);
+            double sina = Math.sin(rad);
+            float x = (float) (this.x * cosa - this.y * sina);
+            float y = (float) (this.x * sina + this.y * cosa);
+            Point p = new Point();
+            p.x = x;
+            p.y = y;
+            return p;
+        }
     }
 
     public PathView(Context context) {
@@ -63,27 +69,32 @@ public class PathView extends View {
     }
 
     public void updateOrientation(float[] orientation){
-        double odegrees1 = Math.toDegrees(orientation[0]);
-        double odegrees2 = Math.toDegrees(orientation[1]);
-        double odegrees3 = Math.toDegrees(orientation[2]);
+        // Rotate Z only
+        p1 = p1.rotateZ(Math.toDegrees(orientation[0]));
+        p2 = p2.rotateZ(Math.toDegrees(orientation[0]));
+        p3 = p3.rotateZ(Math.toDegrees(orientation[0]));
+        p4 = p4.rotateZ(Math.toDegrees(orientation[0]));
 
-        Log.d(TAG, String.format("------>>Azimuth=%.4f , Pitch=%.4f, Roll=%.4f", odegrees1, odegrees2, odegrees3));
-
-        double cosa, sina, xn, yn;
-        cosa = Math.cos(orientation[0]);
-        sina = Math.sin(orientation[0]);
-
-        //postInvalidate();
+        postInvalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
+        p1.x = mPaddingX;
+        p1.y = mPaddingY;
+        p3.x = 2 * (mCenterX - mPaddingX);
+        p3.y = 2 * (mCenterY - mPaddingY);
+        p2.x = p3.x;
+        p2.y = p1.y;
+        p4.x = p1.x;
+        p4.y = p3.y;
+
         Path p = new Path();
-        p.moveTo(mX1, mY1);
-        p.lineTo(mX2, mY2);
-        p.lineTo(mX3, mY3);
-        p.lineTo(mX4, mY4);
+        p.moveTo(p1.x, p1.y);
+        p.lineTo(p2.x, p2.y);
+        p.lineTo(p3.x, p3.y);
+        p.lineTo(p4.x, p4.y);
         p.close();
         canvas.drawPath(p, mPaint);
     }
@@ -93,13 +104,13 @@ public class PathView extends View {
         mCenterX = w / 2.0f;
         mCenterY = h / 2.0f;
 
-        mX1 = mPaddingX;
-        mY1 = mPaddingY;
-        mX4 = 2 * (mCenterX - mPaddingX);
-        mY4 = 2 * (mCenterY - mPaddingY);
-        mX2 = mX4;
-        mY2 = mY1;
-        mX3 = mX1;
-        mY3 = mY4;
+        p1.x = mPaddingX;
+        p1.y = mPaddingY;
+        p3.x = 2 * (mCenterX - mPaddingX);
+        p3.y = 2 * (mCenterY - mPaddingY);
+        p2.x = p3.x;
+        p2.y = p1.y;
+        p4.x = p1.x;
+        p4.y = p3.y;
     }
 }

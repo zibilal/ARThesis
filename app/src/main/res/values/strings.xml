@@ -15,5 +15,6 @@
     <string name="title_activity_cube_in2_dcanvas">CubeIn2DCanvasActivity</string>
     <string name="title_activity_oval_view_test">OvalViewTestActivity</string>
     <string name="title_activity_path_view_test">PathViewTestActivity</string>
+    <string name="title_activity_triangle_view">TriangleViewActivity</string>
 
 </resources>

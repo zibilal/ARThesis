@@ -96,6 +96,7 @@ public class TestActivity extends Activity {
         lClass.add(new ClassObj("CubeIn2dCanvas", CubeIn2DCanvasActivity.class));
         lClass.add(new ClassObj("OvalViewTestActivity", OvalViewTestActivity.class));
         lClass.add(new ClassObj("PathViewTestActivity", PathViewTestActivity.class));
+        lClass.add(new ClassObj("TriangleViewActivity", TriangleViewActivity.class));
     }
 
 

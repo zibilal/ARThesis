@@ -68,6 +68,10 @@
             android:name="com.zibilal.arthesis.app.PathViewTestActivity"
             android:label="@string/title_activity_path_view_test" >
         </activity>
+        <activity
+            android:name="com.zibilal.arthesis.app.TriangleViewActivity"
+            android:label="@string/title_activity_triangle_view" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />
