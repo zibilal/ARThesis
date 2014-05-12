@@ -66,11 +66,16 @@
         </activity>
         <activity
             android:name="com.zibilal.arthesis.app.PathViewTestActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_path_view_test" >
         </activity>
         <activity
             android:name="com.zibilal.arthesis.app.TriangleViewActivity"
             android:label="@string/title_activity_triangle_view" >
+        </activity>
+        <activity
+            android:name="com.zibilal.arthesis.app.CoordinateViewActivity"
+            android:label="@string/title_activity_coordinate_view" >
         </activity>
     </application>
 

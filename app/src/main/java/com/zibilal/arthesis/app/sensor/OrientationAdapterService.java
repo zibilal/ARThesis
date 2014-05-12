@@ -59,7 +59,7 @@ public class OrientationAdapterService implements SensorEventListener {
         float[] I = new float[9];
 
         if(SensorManager.getRotationMatrix(R, I, mGravity, mMagnetic)) {
-            SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_MINUS_Z, R);
+            SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Z, R);
 
             SensorManager.getOrientation(R, mOrientation);
 

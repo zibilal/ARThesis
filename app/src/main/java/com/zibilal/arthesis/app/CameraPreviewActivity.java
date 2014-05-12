@@ -86,7 +86,7 @@ public class CameraPreviewActivity extends Activity {
 
         //addContentView(new ARView(this), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mCubeView = new CubeView(this);
-        addContentView(mCubeView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addContentView(mCubeView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         mOrientationService = new OrientationAdapterService(this);
         mOrientationService.setListener(mUpdater);

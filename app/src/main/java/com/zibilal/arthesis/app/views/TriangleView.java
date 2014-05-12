@@ -3,6 +3,7 @@ package com.zibilal.arthesis.app.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Typeface;
@@ -86,10 +87,23 @@ public class TriangleView extends View {
         canvas.drawText("B", B2.x, B2.y, mTextPaint);
         canvas.drawText("C", C2.x, C2.y, mTextPaint);
 
+        mPaint.setColor(Color.DKGRAY);
         canvas.drawPath(mPath3, mPaint);
         canvas.drawText("A", A3.x, A3.y, mTextPaint );
         canvas.drawText("B", B3.x, B3.y, mTextPaint);
         canvas.drawText("C", C3.x, C3.y, mTextPaint);
+
+        Path path = new Path();
+        path.moveTo(A1.x, A1.y);
+        path.lineTo(B1.x, B1.y);
+        path.lineTo(C1.x, C1.y);
+        path.close();
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(-20, C1.x, C1.y);
+        path.transform(matrix);
+        mPaint.setColor(Color.RED);
+        canvas.drawPath(path, mPaint);
     }
 
     @Override
@@ -123,12 +137,12 @@ public class TriangleView extends View {
         B3 = mTransform.transform(new Pointf(0.5f, 0.5f));
         C3 = mTransform.transform(new Pointf(0.5f, 0.2f));
 
-        double angle=20;
+        double angle=-30;
         A2 = mTransform.rotate(A1, angle);
         B2 = mTransform.rotate(B1, angle);
         C2 = mTransform.rotate(C1, angle);
 
-        angle=-20;
+        angle=-90;
         A3 = mTransform.rotate(A1, angle);
         B3 = mTransform.rotate(B1, angle);
         C3 = mTransform.rotate(C1, angle);
@@ -151,5 +165,7 @@ public class TriangleView extends View {
         mPath3.lineTo(B3.x, B3.y);
         mPath3.lineTo(C3.x, C3.y);
         mPath3.close();
+
+
     }
 }

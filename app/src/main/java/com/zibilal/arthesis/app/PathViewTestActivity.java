@@ -17,7 +17,7 @@ public class PathViewTestActivity extends Activity {
     private OrientationAdapterService.UpdateUI mUpdater = new OrientationAdapterService.UpdateUI() {
         @Override
         public void update(float[] orientation) {
-            //mPathView.updateOrientation(orientation);
+            mPathView.rotateView(orientation);
         }
     };
 
