@@ -32,8 +32,6 @@ public class Transform {
         return pointf;
     }
 
-    // D0NTb34j3rk
-
     public Pointf rotate(Pointf po, double angle) {
         double rad = Math.toRadians(angle);
         double cosa = Math.cos(rad);

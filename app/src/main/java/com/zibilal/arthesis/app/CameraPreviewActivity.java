@@ -1,17 +1,24 @@
 package com.zibilal.arthesis.app;
 
 import android.app.Activity;
+import android.graphics.Matrix;
+import android.graphics.Point;
 import android.hardware.Camera;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 
+import com.zibilal.arthesis.app.location.CameraTransformation;
+import com.zibilal.arthesis.app.location.LocationService;
 import com.zibilal.arthesis.app.sensor.OrientationAdapterService;
 import com.zibilal.arthesis.app.sensor.Vector3f;
+import com.zibilal.arthesis.app.views.ARView;
 import com.zibilal.arthesis.app.views.CubeView;
 
 import java.io.IOException;
@@ -28,8 +35,10 @@ public class CameraPreviewActivity extends Activity {
     private boolean mInPreview;
 
     private CubeView mCubeView;
+    private ARView mArView;
 
     private OrientationAdapterService mOrientationService;
+    private LocationService mLocationService;
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
@@ -67,8 +76,15 @@ public class CameraPreviewActivity extends Activity {
 
     private OrientationAdapterService.UpdateUI mUpdater = new OrientationAdapterService.UpdateUI() {
         @Override
-        public void update(float[] orientation) {
-            mCubeView.updateOrientation(orientation);
+        public void update(Matrix matrix) {
+            mArView.updatePosition(matrix);
+        }
+    };
+
+    private LocationService.Callback mLocationCallback = new LocationService.Callback() {
+        @Override
+        public void onCurrentLocation(Location location) {
+
         }
     };
 
@@ -84,9 +100,18 @@ public class CameraPreviewActivity extends Activity {
         mPreviewHolder = mCameraPreview.getHolder();
         mPreviewHolder.addCallback(callback);
 
-        //addContentView(new ARView(this), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mCubeView = new CubeView(this);
-        addContentView(mCubeView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        CameraTransformation cameraTransformation = new CameraTransformation(size.x, size.y);
+
+        mArView = new ARView(this, cameraTransformation);
+        addContentView(mArView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        mLocationService = new LocationService(this);
+        mLocationService.setCallback(mLocationCallback);
+        mArView.setLocation(mLocationService.getCurrentLocation());
 
         mOrientationService = new OrientationAdapterService(this);
         mOrientationService.setListener(mUpdater);
@@ -97,6 +122,7 @@ public class CameraPreviewActivity extends Activity {
         super.onResume();
         mCamera = Camera.open();
         mOrientationService.start();
+        mLocationService.start();
     }
 
     @Override
@@ -111,6 +137,7 @@ public class CameraPreviewActivity extends Activity {
         mInPreview=false;
 
         mOrientationService.stop();
+        mLocationService.stop();
 
         super.onPause();
     }

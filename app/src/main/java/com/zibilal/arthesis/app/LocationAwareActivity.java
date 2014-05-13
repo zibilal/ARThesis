@@ -75,7 +75,7 @@ public class LocationAwareActivity extends Activity{
                             List<Geoname> geonames = wsResponse.getGeonames();
 
                             for(Geoname g : geonames) {
-                                Point p = mCameraTransformation.convertToVector(cloc, g);
+                                Point p = null; // mCameraTransformation.convertToVector(cloc, g);
                                 p = mCameraTransformation.projectPoint(p);
                                 g.setProjection(p);
                             }

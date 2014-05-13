@@ -1,6 +1,7 @@
 package com.zibilal.arthesis.app.sensor;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -60,10 +61,12 @@ public class OrientationAdapterService implements SensorEventListener {
 
         if(SensorManager.getRotationMatrix(R, I, mGravity, mMagnetic)) {
             SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Z, R);
+            Matrix matrix = new Matrix();
+            matrix.setValues(R);
 
-            SensorManager.getOrientation(R, mOrientation);
+            //SensorManager.getOrientation(R, mOrientation);
 
-            mListener.update(mOrientation);
+            mListener.update(matrix);
         }
     }
 
@@ -73,6 +76,6 @@ public class OrientationAdapterService implements SensorEventListener {
     }
 
     public interface UpdateUI {
-        public void update(float[] orientation);
+        public void update(Matrix matrix);
     }
 }

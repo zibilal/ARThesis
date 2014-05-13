@@ -3,9 +3,15 @@ package com.zibilal.arthesis.app.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.location.Location;
 import android.view.View;
+
+import com.zibilal.arthesis.app.location.CameraTransformation;
+import com.zibilal.arthesis.app.sensor.Marker;
+import com.zibilal.arthesis.app.sensor.Vector3f;
 
 /**
  * Created by bmuhamm on 5/2/14.
@@ -20,11 +26,18 @@ public class ARView extends View {
     private RadialGradient gradient;
     private PaintScreen paintScreen;
 
-    public ARView(Context context) {
+    private Location currentLocation;
+    private Marker pondokIndahMarker;
+    private CameraTransformation cameraTransformation;
+
+    public ARView(Context context, CameraTransformation cameraTransformation) {
         super(context);
 
         paintScreen = new PaintScreen();
         paintScreen.setFill(true);
+        this.cameraTransformation=cameraTransformation;
+        pondokIndahMarker = new Marker(this.cameraTransformation);
+        pondokIndahMarker.setVisible(true);
     }
 
     @Override
@@ -32,7 +45,7 @@ public class ARView extends View {
         centerX = width / 2.0f;
         centerY = height / 2.0f;
 
-        radius = Math.min(width, height) / 3.0f;
+        radius = Math.min(width, height) / 50.0f;
 
         gradient = new RadialGradient(centerX - radius * 0.3f,
                 centerY - radius * 0.3f, radius*1.3f, color1, color2, Shader.TileMode.CLAMP);
@@ -43,5 +56,21 @@ public class ARView extends View {
     protected void onDraw(Canvas canvas) {
         paintScreen.setCanvas(canvas);
         paintScreen.paintCircle(centerX, centerY, radius);
+
+        pondokIndahMarker.draw(paintScreen);
+    }
+
+    public void setLocation(Location location){
+        currentLocation = location;
+        pondokIndahMarker.update(currentLocation);
+    }
+
+    public void updateLocation(Location location) {
+        pondokIndahMarker.update(location);
+    }
+
+    public void updatePosition(Matrix matrix) {
+        cameraTransformation.updateRotation(matrix);
+        postInvalidate();
     }
 }
