@@ -2,6 +2,8 @@ package com.zibilal.arthesis.app.sensor;
 
 import android.graphics.Matrix;
 
+import java.util.Vector;
+
 /**
  * Created by bmuhamm on 5/3/14.
  */
@@ -67,13 +69,17 @@ public class Vector3f {
         return new Vector3f(xn, yn, z);
     }
 
-    public Vector3f prod(Matrix rotationMatrix) {
-        float[] values = new float[9];
-        rotationMatrix.getValues(values);
+    public Vector3f prod(Matrix3x3 rotationMatrix) {
+        float[] values = rotationMatrix.getValues();
 
-        this.x = values[0] * this.x + values[1] * this.y + values[2] * this.z;
-        this.y = values[3] * this.x + values[4] * this.y + values[5] * this.z;
-        this.z = values[6] * this.x + values[7] * this.y + values[8] * this.z;
+        double xtemp, ytemp, ztemp;
+
+        xtemp = values[0] * this.x + values[1] * this.y + values[2] * this.z;
+        ytemp = values[3] * this.x + values[4] * this.y + values[5] * this.z;
+        ztemp = values[6] * this.x + values[7] * this.y + values[8] * this.z;
+        this.x = (float) xtemp;
+        this.y = (float) ytemp;
+        this.z = (float) ztemp;
 
         return this;
     }
@@ -96,5 +102,10 @@ public class Vector3f {
 
     private float radians(double degrees) {
         return (float) (degrees * Math.PI / 180);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Vector3f <%.4f , %.4f, %.4f>", x, y, z);
     }
 }

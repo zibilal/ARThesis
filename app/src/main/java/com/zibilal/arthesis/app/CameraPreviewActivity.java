@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.zibilal.arthesis.app.location.CameraTransformation;
 import com.zibilal.arthesis.app.location.LocationService;
+import com.zibilal.arthesis.app.sensor.Matrix3x3;
 import com.zibilal.arthesis.app.sensor.OrientationAdapterService;
 import com.zibilal.arthesis.app.sensor.Vector3f;
 import com.zibilal.arthesis.app.views.ARView;
@@ -76,7 +77,7 @@ public class CameraPreviewActivity extends Activity {
 
     private OrientationAdapterService.UpdateUI mUpdater = new OrientationAdapterService.UpdateUI() {
         @Override
-        public void update(Matrix matrix) {
+        public void update(Matrix3x3 matrix) {
             mArView.updatePosition(matrix);
         }
     };
@@ -84,7 +85,7 @@ public class CameraPreviewActivity extends Activity {
     private LocationService.Callback mLocationCallback = new LocationService.Callback() {
         @Override
         public void onCurrentLocation(Location location) {
-
+            mArView.updateLocation(location);
         }
     };
 
@@ -111,7 +112,6 @@ public class CameraPreviewActivity extends Activity {
 
         mLocationService = new LocationService(this);
         mLocationService.setCallback(mLocationCallback);
-        mArView.setLocation(mLocationService.getCurrentLocation());
 
         mOrientationService = new OrientationAdapterService(this);
         mOrientationService.setListener(mUpdater);

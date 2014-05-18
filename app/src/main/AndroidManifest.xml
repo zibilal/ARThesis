@@ -66,8 +66,8 @@
         </activity>
         <activity
             android:name="com.zibilal.arthesis.app.PathViewTestActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_path_view_test" >
+            android:label="@string/title_activity_path_view_test"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.zibilal.arthesis.app.TriangleViewActivity"
@@ -76,6 +76,15 @@
         <activity
             android:name="com.zibilal.arthesis.app.CoordinateViewActivity"
             android:label="@string/title_activity_coordinate_view" >
+        </activity>
+        <activity
+            android:name="com.zibilal.arthesis.app.TestNumberActivity"
+            android:label="@string/title_activity_test_number"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.zibilal.arthesis.app.TestMatrixOpActivity"
+            android:label="@string/title_activity_test_matrix_op" >
         </activity>
     </application>
 

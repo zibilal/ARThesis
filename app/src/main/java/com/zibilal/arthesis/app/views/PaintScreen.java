@@ -1,13 +1,18 @@
 package com.zibilal.arthesis.app.views;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.util.Log;
 
 /**
  * Created by bmuhamm on 5/2/14.
  */
 public class PaintScreen {
+
+    private static final int TEXT_SIZE=70;
+
     private Canvas mCanvas;
     private int mWidth;
     private int mHeight;
@@ -16,6 +21,8 @@ public class PaintScreen {
     public PaintScreen() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(Color.LTGRAY);
+        mPaint.setTextSize(TEXT_SIZE);
     }
 
     public void setCanvas(Canvas canvas) {
@@ -59,6 +66,11 @@ public class PaintScreen {
     }
 
     public void paintCircle(float x, float y, float radius) {
+        Log.d("Marker", " Canvas painter = " + getCanvas() + " , x=" + x + " , y=" + y + " , radius=" + radius);
         getCanvas().drawCircle(x, y, radius, mPaint);
+    }
+
+    public void paintText(float x, float y, String text) {
+        getCanvas().drawText(text, x, y, mPaint);
     }
 }

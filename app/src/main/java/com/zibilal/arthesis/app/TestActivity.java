@@ -87,6 +87,8 @@ public class TestActivity extends Activity {
     }
 
     private void initLClass() {
+        lClass.add(new ClassObj("TestMatrixOpActivity", TestMatrixOpActivity.class));
+        lClass.add(new ClassObj("TestNumberActivity", TestNumberActivity.class));
         lClass.add(new ClassObj("Camera Preview", CameraPreviewActivity.class));
         lClass.add(new ClassObj("Compass Preview", CompassActivity.class));
         lClass.add(new ClassObj("Location Aware", LocationAwareActivity.class));

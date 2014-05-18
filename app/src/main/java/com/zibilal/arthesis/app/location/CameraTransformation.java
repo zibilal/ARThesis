@@ -5,6 +5,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.zibilal.arthesis.app.model.Geoname;
+import com.zibilal.arthesis.app.sensor.Matrix3x3;
 import com.zibilal.arthesis.app.sensor.Vector3f;
 
 /**
@@ -12,21 +13,22 @@ import com.zibilal.arthesis.app.sensor.Vector3f;
  */
 public class CameraTransformation {
 
-    public static final int DEFAULT_VIEW_ANGLE_DEGREES=30;
+    public static final int DEFAULT_VIEW_ANGLE_DEGREES=45;
     private static final String TAG="CameraTransformation";
 
     private double viewDistance;
     private int displayWidth;
     private int displayHeight;
 
-    private Matrix rotationMatrix;
+    private Matrix3x3 rotationMatrix;
 
     public CameraTransformation(int width, int height){
         displayWidth=width;
         displayHeight=height;
-        double rad = Math.toRadians(DEFAULT_VIEW_ANGLE_DEGREES/2);
-        viewDistance= (displayWidth/2) / Math.tan(rad);
-        String str = String.format("Angle=%d , Tan(Angle)=%.2f", DEFAULT_VIEW_ANGLE_DEGREES/2, Math.tan(rad));
+        double rad = Math.toRadians(DEFAULT_VIEW_ANGLE_DEGREES /2 );
+        float tan = (float) Math.tan(rad);
+        viewDistance= (displayWidth/2) / tan;
+        String str = String.format("Angle=%d ", 22);
         Log.d(TAG, str);
     }
 
@@ -54,11 +56,11 @@ public class CameraTransformation {
         return new Point(x[0], y, z[0]);
     }
 
-    public void updateRotation(Matrix matrix) {
+    public void updateRotation(Matrix3x3 matrix) {
         rotationMatrix = matrix;
     }
 
-    public Matrix getRotationMatrix(){
+    public Matrix3x3 getRotationMatrix(){
         return rotationMatrix;
     }
 
@@ -77,9 +79,15 @@ public class CameraTransformation {
 
     public Vector3f projectPoint(Vector3f original) {
         float x, y, z;
-        x = (float) viewDistance * original.x / original.z;
-        y = (float) viewDistance * original.y / original.z;
+        x = (float) viewDistance * original.x / -original.z;
+        y = (float) viewDistance * original.y / -original.z;
         z = original.z;
+
+        x = x + displayWidth/2;
+        y = -y + displayHeight/2;
+
+        Log.d("CameraTransformation", String.format("Display width = %d , height = %d", displayWidth, displayHeight) );
+        Log.d("CameraTransformation", String.format("View distance %.4f", viewDistance));
 
         Vector3f v = new Vector3f(x, y, z);
         return v;

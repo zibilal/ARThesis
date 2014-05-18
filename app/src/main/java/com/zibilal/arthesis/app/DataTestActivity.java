@@ -119,11 +119,12 @@ public class DataTestActivity extends Activity {
         Geoname geoname = new Geoname();
         geoname.setLat(lat);
         geoname.setLng(lon);
+        /*
 
         Point point = cameraTransformation.convertToVector(currentLocation, geoname);
 
         String pointStr = String.format("Calculated vector: x=%.4f y=%.4f z=%.4f", point.getX(), point.getY(), point.getZ());
-        resultCalculation.setText(pointStr);
+        resultCalculation.setText(pointStr); */
     }
 
     private void calculateProjection(double x, double y, double z){
