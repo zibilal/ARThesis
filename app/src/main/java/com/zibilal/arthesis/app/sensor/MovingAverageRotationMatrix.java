@@ -41,8 +41,8 @@ public class MovingAverageRotationMatrix {
         Log.d(TAG, String.format("---> Matrix m %s", m));
         Matrix3x3 mSub = m.sub(lastMatrix);
         Log.d(TAG, String.format("---> Matrix mSub %s ", mSub));
-        Log.d(TAG, String.format("---> CircularBuffer length %.4f", (1/circularBuffer.length) ));
-        Matrix3x3 mSubMult = mSub.mult(1/circularBuffer.length);
+        Log.d(TAG, String.format("---> CircularBuffer length %.4f", (1.0f/circularBuffer.length) ));
+        Matrix3x3 mSubMult = mSub.mult(1.0f/circularBuffer.length);
         Log.d(TAG, String.format("---> Matrix mSubMult %s", mSubMult));
         Matrix3x3 mAvg = avg.add(mSubMult);
         Log.d(TAG, String.format("---> Matrix mAvg %s", mAvg));

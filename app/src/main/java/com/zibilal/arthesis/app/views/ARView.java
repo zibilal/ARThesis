@@ -41,8 +41,12 @@ public class ARView extends View {
         pondokIndahMarker = new Marker(this.cameraTransformation);
         pondokIndahMarker.setVisible(true);
 
-        k = 5;
+        k = 60;
         maRotationMatrix = new MovingAverageRotationMatrix(k);
+    }
+
+    public void setMovingAverageSize(int k) {
+        this.k=k;
     }
 
     @Override
@@ -77,19 +81,32 @@ public class ARView extends View {
         pondokIndahMarker.update(location);
     }
 
+    public void reInvalidate() {
+        postInvalidate();
+    }
+
     public void updatePosition(Matrix3x3 matrix) {
-        //smoothR(matrix);
+        //smoothR2(matrix);
 
         cameraTransformation.updateRotation(matrix);
         postInvalidate();
 
     }
 
+    private Matrix3x3 avg = new Matrix3x3();
+    private void smoothR2(Matrix3x3 matrix) {
+        for(int i=0; i < k; i++) {
+            avg = avg.add(matrix);
+        }
+        avg = avg.mult(1.0f / k);
+        cameraTransformation.updateRotation(avg);
+        postInvalidate();
+    }
+
     private void smoothR(Matrix3x3 matrix){
         maRotationMatrix.pushMatrix(matrix);
-        if(maRotationMatrix.getCount() == maRotationMatrix.getLength()-1 ) {
+        //if(maRotationMatrix.getCount() == maRotationMatrix.getLength()-1 ) {
             cameraTransformation.updateRotation(maRotationMatrix.getRotationMatrix());
-            postInvalidate();
-        }
+        //}
     }
 }

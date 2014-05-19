@@ -1,7 +1,6 @@
 package com.zibilal.arthesis.app;
 
 import android.app.Activity;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ public class PathViewTestActivity extends Activity {
     private PathView mPathView;
 
     private OrientationAdapterService mOrientationService;
-    private OrientationAdapterService.UpdateUI mUpdater = new OrientationAdapterService.UpdateUI() {
+    private OrientationAdapterService.OnRotationChanged mUpdater = new OrientationAdapterService.OnRotationChanged() {
         @Override
         public void update(Matrix3x3 matrix) {
             //mPathView.rotateView(orientation);

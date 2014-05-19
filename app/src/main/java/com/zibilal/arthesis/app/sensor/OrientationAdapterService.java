@@ -20,7 +20,10 @@ public class OrientationAdapterService implements SensorEventListener {
     private float[] mMagnetic = {0, 0, 0};
     private float[] mOrientation = {0, 0, 0};
 
-    private UpdateUI mListener;
+    private OnRotationChanged mListener;
+    private OnSensorChanged mInvalidate;
+
+    private int mK;
 
     public OrientationAdapterService(Context context){
         mContext = context;
@@ -28,14 +31,16 @@ public class OrientationAdapterService implements SensorEventListener {
         initService();
     }
 
-    public void setListener(UpdateUI listener) {
+    public void setListener(OnRotationChanged listener) {
         mListener=listener;
     }
+    public void setListener2(OnSensorChanged listener2) { mInvalidate=listener2; }
 
     public void initService() {
         mManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mGravitySensor = mManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagneticSensor = mManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mK=100;
     }
 
     public void start(){
@@ -64,8 +69,13 @@ public class OrientationAdapterService implements SensorEventListener {
             matrix.setValues(R);
 
             //SensorManager.getOrientation(R, mOrientation);
+            Matrix3x3 avg = new Matrix3x3();
+            for(int i=0; i <mK; i++) {
+                avg = avg.add(matrix);
+            }
+            avg = avg.mult(1.0f/mK);
 
-            mListener.update(matrix);
+            mListener.update(avg);
         }
     }
 
@@ -74,7 +84,11 @@ public class OrientationAdapterService implements SensorEventListener {
 
     }
 
-    public interface UpdateUI {
+    public interface OnRotationChanged {
         public void update(Matrix3x3 matrix);
+    }
+
+    public interface OnSensorChanged {
+        public void postInvalidate();
     }
 }
